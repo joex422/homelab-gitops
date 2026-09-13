@@ -6,12 +6,19 @@ metadata:
 spec:
   project: prod
 
-  source:
-    repoURL: https://kubernetes-sigs.github.io/headlamp
-    chart: headlamp
-    targetRevision: 0.45.0
-    helm:
-      releaseName: headlamp
+  sources:
+    - repoURL: https://kubernetes-sigs.github.io/headlamp
+      chart: headlamp
+      targetRevision: 0.45.0
+      helm:
+        releaseName: headlamp
+        valueFiles:
+          - $values/apps/headlamp/values.yaml
+# This gives that Git repository a name:
+# So Argo CD can refer to it using: $values
+    - repoURL: https://github.com/joex422/homelab-gitops.git
+      targetRevision: main
+      ref: values
 
   destination:
     server: https://kubernetes.default.svc
