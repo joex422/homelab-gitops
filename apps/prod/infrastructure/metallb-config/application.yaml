@@ -10,7 +10,7 @@ metadata:
 spec:
   project: prod
   source:
-    repoURL: https://github.com/joe44824/homelab-gitops.git
+    repoURL: https://github.com/joex422/homelab-gitops.git
     targetRevision: main
     path: apps/prod/infrastructure/metallb-config
   destination:

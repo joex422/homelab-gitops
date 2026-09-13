@@ -6,7 +6,7 @@ metadata:
 spec:
   description: Everything running on the prod cluster
   sourceRepos:
-    - "https://github.com/joe44824/homelab-gitops.git"
+    - "https://github.com/joex422/homelab-gitops.git"
     - "https://metallb.github.io/metallb"
   destinations:
     - namespace: "*"
