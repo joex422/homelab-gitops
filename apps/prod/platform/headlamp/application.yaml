@@ -13,7 +13,7 @@ spec:
       helm:
         releaseName: headlamp
         valueFiles:
-          - $values/apps/headlamp/values.yaml
+          - $values/apps/prod/platform/headlamp/values.yaml
 # This gives that Git repository a name:
 # So Argo CD can refer to it using: $values
     - repoURL: https://github.com/joex422/homelab-gitops.git
