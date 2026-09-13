@@ -10,16 +10,16 @@ spec:
   source:
     repoURL: https://github.com/joex422/homelab-gitops.git
     targetRevision: main
-    path: apps/prod
+    path: .
     directory:
       recurse: true
-      include: "**/application.yaml"
+      include: "{apps/prod/**/application.yaml,projects/prod.yaml}"
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+    selfHeal: true
     syncOptions:
       - CreateNamespace=true
