@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-config
+  namespace: argocd
+  annotations:
+    # After the metallb chart (wave 20) — IPAddressPool/L2Advertisement are
+    # MetalLB's own CRDs, which must exist before these resources can apply.
+    argocd.argoproj.io/sync-wave: "21"
+spec:
+  project: prod
+  source:
+    repoURL: https://github.com/joe44824/homelab-gitops.git
+    targetRevision: main
+    path: apps/prod/infrastructure/metallb-config
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

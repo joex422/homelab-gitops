@@ -1,0 +1,44 @@
+# cloudflared makes outbound connections to Cloudflare's edge — no inbound
+# port, no LoadBalancer/MetalLB IP needed, unlike everything else in
+# infrastructure/. 2 replicas per Cloudflare's own guidance for tunnel
+# redundancy. No ingress rules configured on the tunnel yet (check the
+# Cloudflare dashboard before assuming anything routes through this).
+#
+# The token itself is NOT here — it's a pre-existing Secret
+# (cloudflared-token, in the default namespace) created directly via
+# kubectl, same pattern as every other credential in this repo.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  namespace: cloudflared
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloudflared
+  template:
+    metadata:
+      labels:
+        app: cloudflared
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:2026.8.3
+          args:
+            - tunnel
+            - --no-autoupdate
+            - run
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflared-token
+                  key: token
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
