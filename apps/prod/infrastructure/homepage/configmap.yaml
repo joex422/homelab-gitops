@@ -10,11 +10,11 @@ data:
     color: slate
     background:
       image: https://livewallpapers4free.com/wp-content/uploads/2024/08/lofi-girl-chilling-night-city-moon-4k-live_thumb1-scaled.jpg
-      blur: sm
-      saturate: 80
-      brightness: 55
-      opacity: 95
-    cardBlur: md
+      blur: ""
+      saturate: 100
+      brightness: 85
+      opacity: 90
+    cardBlur: sm
     headerStyle: clean
     hideVersion: true
     layout:
