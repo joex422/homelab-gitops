@@ -8,24 +8,90 @@ data:
     title: Homelab
     theme: dark
     color: slate
+    background:
+      image: https://livewallpapers4free.com/wp-content/uploads/2024/08/lofi-girl-chilling-night-city-moon-4k-live_thumb1-scaled.jpg
+      blur: sm
+      saturate: 80
+      brightness: 55
+      opacity: 95
+    cardBlur: md
+    headerStyle: clean
+    hideVersion: true
+    layout:
+      Infrastructure:
+        style: row
+        columns: 3
+      GitOps & CI/CD:
+        style: row
+        columns: 3
+      Apps:
+        style: row
+        columns: 2
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: false
+      hideVisitURL: false
 
   services.yaml: |
     - Infrastructure:
         - Vault:
+            icon: vault.png
             href: https://vault.home.joecool.work
-            description: Secrets + PKI
+            description: Secrets management + internal PKI
+            siteMonitor: https://vault.home.joecool.work/v1/sys/health
         - Harbor:
+            icon: harbor.png
             href: http://harbor.home.joecool.work
             description: Container registry
+            siteMonitor: http://harbor.home.joecool.work
+        - AdGuard Home:
+            icon: adguard-home.png
+            href: http://192.168.1.208
+            description: DNS + ad-blocking
+
+    - GitOps & CI/CD:
         - ArgoCD:
+            icon: argo-cd.png
             href: https://192.168.1.221
-            description: GitOps (prod cluster)
+            description: GitOps continuous delivery
+            siteMonitor: https://192.168.1.221
+        - Headlamp:
+            icon: kubernetes.png
+            href: http://192.168.1.223
+            description: Kubernetes dashboard
+            siteMonitor: http://192.168.1.223
+        - homelab-gitops:
+            icon: github.png
+            href: https://github.com/joex422/homelab-gitops
+            description: GitOps source repo
+
+    - Apps:
+        - Portfolio:
+            icon: react.png
+            href: http://192.168.1.222
+            description: Personal portfolio site
+            siteMonitor: http://192.168.1.222
+        - Cloudflare Tunnel:
+            icon: cloudflare.png
+            href: https://dash.cloudflare.com
+            description: homelab-prod tunnel status
 
   widgets.yaml: |
+    - datetime:
+        text_size: xl
+        format:
+          dateStyle: long
+          timeStyle: short
     - resources:
         cpu: true
         memory: true
         label: "homepage pod"
 
   bookmarks.yaml: |
-    []
+    - Homelab:
+        - homelab-gitops:
+            - abbr: GH
+              href: https://github.com/joex422/homelab-gitops
+        - Vault UI:
+            - abbr: V
+              href: https://vault.home.joecool.work/ui
