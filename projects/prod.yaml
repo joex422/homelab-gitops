@@ -9,6 +9,7 @@ spec:
     - "https://github.com/joex422/homelab-gitops.git"
     - "https://metallb.github.io/metallb"
     - "https://kubernetes-sigs.github.io/headlamp"
+    - "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
   destinations:
     - namespace: "*"
       server: "https://kubernetes.default.svc"

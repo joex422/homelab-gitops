@@ -1,0 +1,35 @@
+# Dynamic storage provisioner backed by the NFS export already running on
+# pve-7820 (/mnt/nfs-hdd/k8s). Prerequisite for anything needing durable
+# storage across node reschedules — Elasticsearch (for the ELK monitoring
+# stack) is the immediate reason, but this is the StorageClass everything
+# else will use going forward too.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs-provisioner
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "15"
+spec:
+  project: prod
+  source:
+    repoURL: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    chart: nfs-subdir-external-provisioner
+    targetRevision: 4.0.18
+    helm:
+      values: |
+        nfs:
+          server: 192.168.1.203
+          path: /mnt/nfs-hdd/k8s
+        storageClass:
+          name: nfs-client
+          defaultClass: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nfs-provisioner
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
