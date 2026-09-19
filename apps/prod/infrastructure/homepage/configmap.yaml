@@ -94,3 +94,19 @@ data:
         - Vault UI:
             - abbr: V
               href: https://vault.home.joecool.work/ui
+
+  custom.css: |
+    /* Service cards and bookmark rows both ship with a hardcoded
+       dark:bg-white/5 (5% opacity) — barely visible against a vivid
+       background. Overriding via attribute selector since Tailwind
+       escapes ":"/"/" in actual class selectors, but the raw class
+       attribute string still contains them literally, so a substring
+       match works without needing to escape anything. */
+    div[class*="bg-white/5"],
+    a[class*="bg-white/5"] {
+      background-color: rgba(15, 23, 42, 0.75) !important;
+    }
+    div[class*="hover:bg-white/10"]:hover,
+    a[class*="hover:bg-white/10"]:hover {
+      background-color: rgba(15, 23, 42, 0.85) !important;
+    }
