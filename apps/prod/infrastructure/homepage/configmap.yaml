@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: homepage
+data:
+  settings.yaml: |
+    title: Homelab
+    theme: dark
+    color: slate
+
+  services.yaml: |
+    - Infrastructure:
+        - Vault:
+            href: https://vault.home.joecool.work
+            description: Secrets + PKI
+        - Harbor:
+            href: http://harbor.home.joecool.work
+            description: Container registry
+        - ArgoCD:
+            href: https://192.168.1.221
+            description: GitOps (prod cluster)
+
+  widgets.yaml: |
+    - resources:
+        cpu: true
+        memory: true
+        label: "homepage pod"
+
+  bookmarks.yaml: |
+    []
