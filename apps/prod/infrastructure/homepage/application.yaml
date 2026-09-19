@@ -12,7 +12,7 @@ spec:
     targetRevision: main
     path: apps/prod/infrastructure/homepage
     directory:
-      include: "configmap.yaml,deployment.yaml"
+      exclude: "application.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: homepage
