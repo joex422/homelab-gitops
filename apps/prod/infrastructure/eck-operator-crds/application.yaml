@@ -16,13 +16,16 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic-system
-  # The API server populates CRD .status (storedVersions, acceptedNames)
-  # after creation — fields never in the source manifest, so without this
+  # Confirmed via direct diff (rendered chart vs live object): the API
+  # server auto-defaults spec.conversion.strategy to "None" on every CRD
+  # that doesn't declare a conversion strategy — the source manifest never
+  # has this field, but the live object always does, so without this
   # ArgoCD sees permanent drift immediately after every successful sync.
   ignoreDifferences:
     - group: apiextensions.k8s.io
       kind: CustomResourceDefinition
       jsonPointers:
+        - /spec/conversion
         - /status
   syncPolicy:
     automated:
