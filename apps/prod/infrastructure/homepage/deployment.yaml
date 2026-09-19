@@ -21,10 +21,9 @@ spec:
           env:
             # Homepage validates the incoming Host header; without this it
             # 400s everything since it doesn't know its own external
-            # address. Add homepage.home.joecool.work here too once DNS
-            # is set up for it.
+            # address.
             - name: HOMEPAGE_ALLOWED_HOSTS
-              value: "192.168.1.220"
+              value: "192.168.1.220,homepage.home.joecool.work"
           volumeMounts:
             - name: config
               mountPath: /app/config/settings.yaml
