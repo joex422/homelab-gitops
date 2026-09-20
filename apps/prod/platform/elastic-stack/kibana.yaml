@@ -1,0 +1,28 @@
+# Exposed on its own MetalLB IP the same way as homepage/headlamp/argocd
+# (192.168.1.220-223 are already taken, .224 is next free in the pool).
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: monitoring
+  namespace: logging
+spec:
+  version: 9.5.4
+  count: 1
+  elasticsearchRef:
+    name: monitoring
+  podTemplate:
+    spec:
+      containers:
+        - name: kibana
+          resources:
+            requests:
+              cpu: 250m
+              memory: 1Gi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+  http:
+    service:
+      spec:
+        type: LoadBalancer
+        loadBalancerIP: 192.168.1.224

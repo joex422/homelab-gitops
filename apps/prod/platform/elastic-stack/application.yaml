@@ -1,0 +1,26 @@
+# Elasticsearch + Kibana CRs, reconciled by the ECK operator (wave 17).
+# Single-node cluster sized for homelab monitoring, not HA production data.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elastic-stack
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "18"
+spec:
+  project: prod
+  source:
+    repoURL: https://github.com/joex422/homelab-gitops.git
+    targetRevision: main
+    path: apps/prod/platform/elastic-stack
+    directory:
+      exclude: "application.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: logging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
