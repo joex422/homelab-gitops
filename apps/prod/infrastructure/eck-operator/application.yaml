@@ -14,17 +14,16 @@ spec:
     repoURL: https://helm.elastic.co
     chart: eck-operator
     targetRevision: 3.5.0
+    helm:
+      values: |
+        # CRDs are already owned exclusively by the eck-operator-crds
+        # Application; leaving this chart's own installCRDs on made the two
+        # Applications fight over the same objects (each sync flipped the
+        # other to OutOfSync).
+        installCRDs: false
   destination:
     server: https://kubernetes.default.svc
     namespace: elastic-system
-  # The eck-operator chart also bundles the same CRDs as eck-operator-crds,
-  # so it hits the identical spec.conversion.strategy auto-default drift.
-  ignoreDifferences:
-    - group: apiextensions.k8s.io
-      kind: CustomResourceDefinition
-      jsonPointers:
-        - /spec/conversion
-        - /status
   syncPolicy:
     automated:
       prune: true
