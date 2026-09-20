@@ -13,6 +13,8 @@ spec:
     repoURL: https://github.com/joex422/homelab-gitops.git
     targetRevision: main
     path: apps/prod/infrastructure/metallb-config
+    directory:
+      exclude: "application.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: metallb-system
