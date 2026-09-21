@@ -21,6 +21,9 @@ spec:
       spec:
         serviceAccountName: k8s-agent
         hostNetwork: true
+        tolerations:
+          - key: node-role.kubernetes.io/control-plane
+            effect: NoSchedule
         containers:
           - name: agent
             resources:
