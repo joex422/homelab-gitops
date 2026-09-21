@@ -15,6 +15,7 @@ spec:
     - name: monitoring
   mode: fleet
   fleetServerEnabled: true
+  policyID: fleet-server-policy
   deployment:
     replicas: 1
   http:
