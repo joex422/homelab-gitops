@@ -14,6 +14,8 @@ spec:
     name: monitoring
   fleetServerRef:
     name: fleet-server
+  elasticsearchRefs:
+    - name: monitoring
   mode: fleet
   policyID: fd92fb00-f061-4bcd-9f32-58e48ac90e3c
   daemonSet:
