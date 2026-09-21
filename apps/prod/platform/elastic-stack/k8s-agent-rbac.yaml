@@ -1,0 +1,61 @@
+# Permissions the Kubernetes-integration Agent DaemonSet needs: reading pod/
+# node/event state for the state_* metricsets, plus kubelet's /stats/summary
+# and /metrics proxy endpoints for per-pod CPU/mem (cAdvisor) data. Matches
+# Elastic's own reference RBAC for this integration.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: k8s-agent
+  namespace: logging
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: k8s-agent
+rules:
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - namespaces
+      - events
+      - pods
+      - services
+      - configmaps
+      - persistentvolumes
+      - persistentvolumeclaims
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - replicasets
+      - daemonsets
+      - statefulsets
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+      - cronjobs
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources:
+      - nodes/stats
+      - nodes/metrics
+      - nodes/proxy
+    verbs: ["get"]
+  - nonResourceURLs:
+      - "/metrics"
+      - "/metrics/*"
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: k8s-agent
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: k8s-agent
+subjects:
+  - kind: ServiceAccount
+    name: k8s-agent
+    namespace: logging
