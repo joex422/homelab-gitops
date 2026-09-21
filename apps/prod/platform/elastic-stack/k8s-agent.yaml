@@ -1,0 +1,32 @@
+# Runs on every node (unlike Fleet Server/Elasticsearch/Kibana, which are
+# singletons) — each node's Agent reports on that node's own pods/kubelet.
+# Enrolls into "Kubernetes Monitoring Policy" (fd92fb00-...), which has the
+# kubernetes integration attached separately via the Fleet API (package
+# policies aren't part of this CR — they live in Kibana's own state).
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: k8s-agent
+  namespace: logging
+spec:
+  version: 9.5.4
+  kibanaRef:
+    name: monitoring
+  fleetServerRef:
+    name: fleet-server
+  mode: fleet
+  policyID: fd92fb00-f061-4bcd-9f32-58e48ac90e3c
+  daemonSet:
+    podTemplate:
+      spec:
+        serviceAccountName: k8s-agent
+        hostNetwork: true
+        containers:
+          - name: agent
+            resources:
+              requests:
+                cpu: 100m
+                memory: 200Mi
+              limits:
+                cpu: 500m
+                memory: 500Mi
