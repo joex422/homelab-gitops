@@ -1,0 +1,24 @@
+# Control plane for every Elastic Agent (k8s DaemonSet later, plus
+# standalone agents on VMs/LXCs outside the cluster). Needs its own
+# LoadBalancer IP (unlike the in-cluster-only Elasticsearch service) since
+# hosts outside k8s enroll against it directly over the LAN.
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: fleet-server
+  namespace: logging
+spec:
+  version: 9.5.4
+  kibanaRef:
+    name: monitoring
+  elasticsearchRefs:
+    - name: monitoring
+  mode: fleet
+  fleetServerEnabled: true
+  deployment:
+    replicas: 1
+  http:
+    service:
+      spec:
+        type: LoadBalancer
+        loadBalancerIP: 192.168.1.225
