@@ -22,6 +22,7 @@ spec:
     podTemplate:
       spec:
         serviceAccountName: k8s-agent
+        automountServiceAccountToken: true
         hostNetwork: true
         dnsPolicy: ClusterFirstWithHostNet
         tolerations:
