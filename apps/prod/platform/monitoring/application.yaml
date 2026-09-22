@@ -1,0 +1,39 @@
+# kube-prometheus-stack bundles the Prometheus Operator, Prometheus,
+# Alertmanager, Grafana, node-exporter, and its own kube-state-metrics
+# (the standalone one was deleted, so this default is fine — no conflict).
+#
+# ServerSideApply is required here, not optional: this chart's CRDs
+# (ServiceMonitor, PrometheusRule, etc.) are large enough that a normal
+# kubectl apply hits the metadata.annotations size limit from the
+# last-applied-configuration annotation. This is a well-documented issue
+# with this specific chart, not something to discover via trial and error.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: prod
+  # Two sources: the Helm chart itself, plus a plain git source just to pull
+  # in values.yaml (same pattern as apps/prod/platform/headlamp).
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 91.4.1
+      helm:
+        releaseName: monitoring
+        valueFiles:
+          - $values/apps/prod/platform/monitoring/values.yaml
+    - repoURL: https://github.com/joex422/homelab-gitops.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

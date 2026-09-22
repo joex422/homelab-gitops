@@ -1,0 +1,36 @@
+prometheus:
+  prometheusSpec:
+    retention: 30d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: nfs-client
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: nfs-client
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+
+grafana:
+  persistence:
+    enabled: true
+    storageClassName: nfs-client
+    size: 10Gi
+  service:
+    type: LoadBalancer
+    loadBalancerIP: 192.168.1.224
+  # No adminPassword set on purpose — the chart auto-generates one into the
+  # "monitoring-grafana" Secret, same pattern as ECK's auto-generated
+  # elastic-user password. Retrieve with:
+  #   kubectl get secret monitoring-grafana -n monitoring \
+  #     -o jsonpath='{.data.admin-password}' | base64 -d
