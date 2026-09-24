@@ -26,7 +26,6 @@ spec:
             - |
               set -e
               apk add --no-cache openssh-client >/dev/null
-              chmod 600 /keys/id_ed25519
               ssh -i /keys/id_ed25519 -o StrictHostKeyChecking=no root@192.168.1.206
           volumeMounts:
             - name: dns-hook-key
