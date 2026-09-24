@@ -1,14 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: prod
+  name: platform
   namespace: argocd
 spec:
-  description: Everything running on the prod cluster
+  description: Core infra only I manage — storage, networking, monitoring
   sourceRepos:
     - "https://github.com/joex422/homelab-gitops.git"
     - "https://metallb.github.io/metallb"
-    - "https://kubernetes-sigs.github.io/headlamp"
     - "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
     - "https://prometheus-community.github.io/helm-charts"
   destinations:

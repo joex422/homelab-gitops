@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "28"
 spec:
-  project: prod
+  project: platform
   source:
     repoURL: https://github.com/joex422/homelab-gitops.git
     targetRevision: main

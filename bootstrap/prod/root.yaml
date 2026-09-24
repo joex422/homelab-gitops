@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: prod
+  project: platform
   source:
     repoURL: https://github.com/joex422/homelab-gitops.git
     targetRevision: main

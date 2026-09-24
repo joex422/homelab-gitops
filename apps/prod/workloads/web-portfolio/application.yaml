@@ -4,7 +4,7 @@ metadata:
   name: web-portfolio
   namespace: argocd
 spec:
-  project: default
+  project: workloads
   source:
     repoURL: https://github.com/joex422/web-portfolio.git
     targetRevision: main

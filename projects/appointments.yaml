@@ -1,0 +1,18 @@
+# No Application uses this yet — created ahead of time for when Moe deploys
+# her appointment-management-system into her own namespace.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: appointments
+  namespace: argocd
+spec:
+  description: Shared with Moe — appointment-management-system
+  sourceRepos:
+    - "https://github.com/MoeMyatThwe/appointment-management-system.git"
+  destinations:
+    - namespace: moe-vpn
+      server: "https://kubernetes.default.svc"
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

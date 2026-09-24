@@ -13,7 +13,7 @@ metadata:
   name: monitoring
   namespace: argocd
 spec:
-  project: prod
+  project: platform
   # Two sources: the Helm chart itself, plus a plain git source just to pull
   # in values.yaml (same pattern as apps/prod/platform/headlamp).
   sources:

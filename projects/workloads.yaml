@@ -1,0 +1,26 @@
+# clusterResourceWhitelist is narrower than platform's on purpose: apps here
+# only ever need their own RBAC bindings (Headlamp needs a ClusterRole to
+# read cluster-wide as a dashboard), never CRDs or other cluster-scoped
+# resources — that stays platform's job.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: workloads
+  namespace: argocd
+spec:
+  description: My own regular apps — homepage, headlamp, web-portfolio, etc.
+  sourceRepos:
+    - "https://github.com/joex422/homelab-gitops.git"
+    - "https://github.com/joex422/web-portfolio.git"
+    - "https://kubernetes-sigs.github.io/headlamp"
+  destinations:
+    - namespace: "*"
+      server: "https://kubernetes.default.svc"
+  clusterResourceWhitelist:
+    - group: "rbac.authorization.k8s.io"
+      kind: ClusterRole
+    - group: "rbac.authorization.k8s.io"
+      kind: ClusterRoleBinding
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
