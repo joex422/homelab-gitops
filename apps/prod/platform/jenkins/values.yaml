@@ -1,0 +1,21 @@
+controller:
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+  serviceType: LoadBalancer
+  loadBalancerIP: 192.168.1.225
+
+persistence:
+  enabled: true
+  storageClass: nfs-client
+  size: 15Gi
+
+# rbac.create defaults to a namespace-scoped Role/RoleBinding for the
+# Kubernetes plugin's agent-spawning permissions — not a ClusterRole. Agents
+# only ever get created in this same "jenkins" namespace.
+rbac:
+  create: true
