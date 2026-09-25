@@ -1,8 +1,13 @@
-# Runs after storage (wave 15) and MetalLB (wave 20/21) so the PVC can bind
-# and the LoadBalancer Service can get an IP before Jenkins itself starts.
+# Runs after storage (wave 15) and MetalLB (wave 20/21) so the PVC can bind.
 #
-# Two sources: the Helm chart, plus a plain git source for values.yaml and
-# the PostSync DNS hook Job (same combined pattern as monitoring/headlamp).
+# Sources: the Helm chart, a plain git source for values.yaml, and the
+# HTTPRoute (jenkins is reached via the shared Gateway now, ClusterIP not
+# LoadBalancer — see [[project_homelab_gateway_api]]). The old PostSync DNS
+# hook Job that pointed the jenkins A record straight at this Service's own
+# LoadBalancer IP was removed here: it kept firing on every sync and
+# silently reverting the DNS cutover to the Gateway's IP back to the old
+# 192.168.1.225. bind9's jenkins record is now a plain, unmanaged A record
+# pointing at the Gateway, same as the other 5 services.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -23,11 +28,6 @@ spec:
     - repoURL: https://github.com/joex422/homelab-gitops.git
       targetRevision: main
       ref: values
-    - repoURL: https://github.com/joex422/homelab-gitops.git
-      targetRevision: main
-      path: apps/prod/platform/jenkins
-      directory:
-        include: "postsync-dns-hook.yaml"
     - repoURL: https://github.com/joex422/homelab-gitops.git
       targetRevision: main
       path: apps/prod/platform/jenkins
