@@ -2,6 +2,11 @@
 # from the upstream project. Low wave so these exist before anything that
 # creates a Gateway or HTTPRoute. Uses source.kustomize (not directory) since
 # config/crd/standard/ contains its own kustomization.yaml.
+#
+# Pinned to v1.6.1, not the latest tag: a stale ValidatingAdmissionPolicy
+# (safe-upgrades.gateway.networking.k8s.io) survives on this cluster from an
+# unrelated, since-removed install attempt at the original 2026-09-02
+# bootstrap and refuses to let CRDs older than v1.5.0 apply.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -13,7 +18,7 @@ spec:
   project: platform
   source:
     repoURL: https://github.com/kubernetes-sigs/gateway-api.git
-    targetRevision: v1.3.0
+    targetRevision: v1.6.1
     path: config/crd/standard
     kustomize: {}
   destination:
