@@ -27,7 +27,12 @@ spec:
       targetRevision: main
       path: apps/prod/platform/jenkins
       directory:
-        include: "postsync-dns-hook.yaml,httproute.yaml"
+        include: "postsync-dns-hook.yaml"
+    - repoURL: https://github.com/joex422/homelab-gitops.git
+      targetRevision: main
+      path: apps/prod/platform/jenkins
+      directory:
+        include: "httproute.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: jenkins
