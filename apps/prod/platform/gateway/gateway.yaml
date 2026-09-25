@@ -5,9 +5,12 @@ metadata:
   namespace: gateway-system
 spec:
   gatewayClassName: cilium
-  addresses:
-    - type: IPAddress
-      value: 192.168.1.230
+  # spec.addresses (a static IP request) isn't honored by Cilium's Gateway
+  # implementation here ("StaticAddress can't be used") — MetalLB assigns
+  # whatever's next from the pool instead. That IP is effectively stable
+  # once assigned (won't move unless this Service is deleted/recreated), so
+  # DNS just points at whatever it ends up being — check
+  # `kubectl get svc -n gateway-system cilium-gateway-homelab-gateway`.
   listeners:
     - name: http
       protocol: HTTP
