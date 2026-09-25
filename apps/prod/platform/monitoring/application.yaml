@@ -27,6 +27,11 @@ spec:
     - repoURL: https://github.com/joex422/homelab-gitops.git
       targetRevision: main
       ref: values
+    - repoURL: https://github.com/joex422/homelab-gitops.git
+      targetRevision: main
+      path: apps/prod/platform/monitoring
+      directory:
+        include: "httproute.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

@@ -1,0 +1,25 @@
+# ArgoCD's own install lives outside git (raw kubectl apply, not a Helm
+# release or ArgoCD Application) — this just adds the HTTPRoute for it
+# without trying to bring the rest of the install under GitOps.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-route
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "23"
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/joex422/homelab-gitops.git
+    targetRevision: main
+    path: apps/prod/platform/argocd-route
+    directory:
+      exclude: "application.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

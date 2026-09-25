@@ -27,7 +27,7 @@ spec:
       targetRevision: main
       path: apps/prod/platform/jenkins
       directory:
-        include: "postsync-dns-hook.yaml"
+        include: "postsync-dns-hook.yaml,httproute.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: jenkins

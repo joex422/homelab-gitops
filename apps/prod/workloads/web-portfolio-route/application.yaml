@@ -1,0 +1,25 @@
+# web-portfolio's Deployment/Service live in the separate joex422/web-portfolio
+# repo (see apps/prod/workloads/web-portfolio/application.yaml) — this just
+# adds the HTTPRoute here instead, rather than touching that other repo.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web-portfolio-route
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "23"
+spec:
+  project: workloads
+  source:
+    repoURL: https://github.com/joex422/homelab-gitops.git
+    targetRevision: main
+    path: apps/prod/workloads/web-portfolio-route
+    directory:
+      exclude: "application.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: web-portfolio
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
