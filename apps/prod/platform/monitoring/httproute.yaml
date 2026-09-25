@@ -5,11 +5,20 @@ metadata:
   namespace: monitoring
 spec:
   parentRefs:
-    - name: homelab-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
       namespace: gateway-system
   hostnames:
     - grafana.home.joecool.work
   rules:
-    - backendRefs:
-        - name: monitoring-grafana
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: monitoring-grafana
           port: 80
+          weight: 1

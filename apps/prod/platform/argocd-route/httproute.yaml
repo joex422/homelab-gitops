@@ -5,11 +5,20 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: homelab-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
       namespace: gateway-system
   hostnames:
     - argocd.home.joecool.work
   rules:
-    - backendRefs:
-        - name: argocd-server
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: argocd-server
           port: 80
+          weight: 1

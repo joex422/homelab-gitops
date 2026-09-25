@@ -5,11 +5,20 @@ metadata:
   namespace: headlamp
 spec:
   parentRefs:
-    - name: homelab-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
       namespace: gateway-system
   hostnames:
     - headlamp.home.joecool.work
   rules:
-    - backendRefs:
-        - name: headlamp
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: headlamp
           port: 80
+          weight: 1

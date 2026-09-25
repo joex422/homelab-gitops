@@ -5,11 +5,20 @@ metadata:
   namespace: jenkins
 spec:
   parentRefs:
-    - name: homelab-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
       namespace: gateway-system
   hostnames:
     - jenkins.home.joecool.work
   rules:
-    - backendRefs:
-        - name: jenkins
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: jenkins
           port: 8080
+          weight: 1

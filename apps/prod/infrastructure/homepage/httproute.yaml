@@ -5,11 +5,20 @@ metadata:
   namespace: homepage
 spec:
   parentRefs:
-    - name: homelab-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
       namespace: gateway-system
   hostnames:
     - homepage.home.joecool.work
   rules:
-    - backendRefs:
-        - name: homepage
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: homepage
           port: 80
+          weight: 1

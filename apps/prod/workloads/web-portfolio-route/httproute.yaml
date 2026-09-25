@@ -5,11 +5,20 @@ metadata:
   namespace: web-portfolio
 spec:
   parentRefs:
-    - name: homelab-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
       namespace: gateway-system
   hostnames:
     - portfolio.home.joecool.work
   rules:
-    - backendRefs:
-        - name: web-portfolio
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: web-portfolio
           port: 80
+          weight: 1
