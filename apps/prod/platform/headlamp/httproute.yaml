@@ -9,6 +9,7 @@ spec:
       kind: Gateway
       name: homelab-gateway
       namespace: gateway-system
+      sectionName: https
   hostnames:
     - headlamp.home.joecool.work
   rules:
