@@ -1,0 +1,26 @@
+# The Vault auth token this issuer uses (Secret "vault-token" in
+# cert-manager namespace) is created directly via kubectl, not tracked
+# here — same pattern as other live secrets this session. It's scoped to a
+# Vault policy allowing only pki/sign/homelab, nothing else.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault-issuer
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/joex422/homelab-gitops.git
+    targetRevision: main
+    path: apps/prod/platform/vault-issuer
+    directory:
+      exclude: "application.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

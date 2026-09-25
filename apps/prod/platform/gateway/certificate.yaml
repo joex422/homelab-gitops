@@ -1,0 +1,19 @@
+# Wildcard cert covers all current and future *.home.joecool.work
+# HTTPRoute hostnames with one Certificate. Vault's "homelab" PKI role
+# caps max_ttl at 30 days, so cert-manager's automatic renewal (kicks in
+# at 2/3 of duration by default) is load-bearing here, not optional.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: homelab-wildcard-tls
+  namespace: gateway-system
+spec:
+  secretName: homelab-wildcard-tls
+  duration: 720h
+  renewBefore: 240h
+  commonName: "*.home.joecool.work"
+  dnsNames:
+    - "*.home.joecool.work"
+  issuerRef:
+    name: vault-homelab
+    kind: ClusterIssuer

@@ -12,6 +12,7 @@ spec:
     - "https://prometheus-community.github.io/helm-charts"
     - "https://charts.jenkins.io"
     - "https://github.com/kubernetes-sigs/gateway-api.git"
+    - "https://charts.jetstack.io"
   destinations:
     - namespace: "*"
       server: "https://kubernetes.default.svc"
