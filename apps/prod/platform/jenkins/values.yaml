@@ -6,8 +6,7 @@ controller:
     limits:
       cpu: 2000m
       memory: 4Gi
-  serviceType: LoadBalancer
-  loadBalancerIP: 192.168.1.225
+  serviceType: ClusterIP
 
 persistence:
   enabled: true

@@ -58,7 +58,7 @@ metadata:
   name: homepage
   namespace: homepage
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: homepage
   ports:
