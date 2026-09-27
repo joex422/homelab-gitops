@@ -82,13 +82,13 @@ data:
           id: svc-portfolio-dev
           icon: mdi-code-braces-#83c9c0
           href: http://192.168.1.90
-          description: Development preview · 192.168.1.90
+          description: Development preview
           siteMonitor: http://192.168.1.90
       - NexVault · dev:
           id: svc-nexvault-dev
           icon: mdi-folder-lock-outline-#83c9c0
           href: http://192.168.1.91
-          description: NexVault preview · 192.168.1.91
+          description: NexVault preview
           siteMonitor: http://192.168.1.91
       - Floci:
           id: svc-floci
@@ -119,7 +119,7 @@ data:
           id: svc-harbor
           icon: harbor.png
           href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/107
-          description: Registry · 192.168.1.212 · web unavailable
+          description: Registry · web unavailable
     - Observability:
       - Grafana:
           id: svc-grafana
@@ -144,118 +144,118 @@ data:
           id: svc-vault
           icon: vault.png
           href: https://vault.home.joecool.work/ui/
-          description: Secrets and internal PKI · 192.168.1.210
+          description: Secrets and internal PKI
           siteMonitor: https://vault.home.joecool.work/v1/sys/health
       - Router:
           id: svc-router
           icon: mdi-router-wireless-#83c9c0
           href: http://192.168.1.254
-          description: LAN gateway · 192.168.1.254
+          description: LAN gateway
       - Bind9 DNS:
           id: svc-bind9-dns
           icon: mdi-dns-#83c9c0
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/102
-          description: Home DNS · 192.168.1.206 · LXC 102
+          description: Home DNS · LXC 102
       - AdGuard Home:
           id: svc-adguard-home
           icon: adguard-home.png
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/104
-          description: DNS filtering · 192.168.1.208 · web unavailable
+          description: DNS filtering · web unavailable
       - Step CA:
           id: svc-step-ca
           icon: mdi-certificate-outline-#83c9c0
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/101
-          description: Private CA · 192.168.1.205 · web unavailable
+          description: Private CA · web unavailable
       - OpenVPN:
           id: svc-openvpn
           icon: mdi-shield-lock-outline-#83c9c0
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/100
-          description: Remote access · 192.168.1.204 · LXC 100
+          description: Remote access · LXC 100
     - Proxmox hosts:
       - pve-3060:
           id: svc-pve-3060
           icon: proxmox.png
           href: https://pve-3060.home.joecool.work:8006
-          description: 192.168.1.26 · dev cluster and infrastructure
+          description: dev cluster and infrastructure
       - pve-7820:
           id: svc-pve-7820
           icon: proxmox.png
           href: https://pve-7820.home.joecool.work:8006
-          description: 192.168.1.203 · prod cluster and NFS
+          description: prod cluster and NFS
     - Production nodes:
       - prod-cp-1:
           id: svc-prod-cp-1
           icon: kubernetes.png
           href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/300
-          description: 192.168.1.70 · VM 300 · pve-7820
+          description: VM 300 · pve-7820
       - prod-worker-1:
           id: svc-prod-worker-1
           icon: kubernetes.png
           href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/301
-          description: 192.168.1.71 · VM 301 · pve-7820
+          description: VM 301 · pve-7820
       - prod-worker-2:
           id: svc-prod-worker-2
           icon: kubernetes.png
           href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/302
-          description: 192.168.1.72 · VM 302 · pve-7820
+          description: VM 302 · pve-7820
     - Development nodes:
       - k3s-master-01:
           id: svc-k3s-master-01
           icon: kubernetes.png
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=qemu/400
-          description: 192.168.1.80 · VM 400 · pve-3060
+          description: VM 400 · pve-3060
       - k3s-worker-01:
           id: svc-k3s-worker-01
           icon: kubernetes.png
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=qemu/401
-          description: 192.168.1.81 · VM 401 · pve-3060
+          description: VM 401 · pve-3060
       - k3s-worker-02:
           id: svc-k3s-worker-02
           icon: kubernetes.png
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=qemu/402
-          description: 192.168.1.82 · VM 402 · pve-3060
+          description: VM 402 · pve-3060
     - LXC containers:
       - openvpn:
           id: svc-openvpn
           icon: mdi-server-outline-#83c9c0
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/100
-          description: 192.168.1.204 · LXC 100 · pve-3060
+          description: LXC 100 · pve-3060
       - step-ca:
           id: svc-step-ca
           icon: mdi-server-outline-#83c9c0
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/101
-          description: 192.168.1.205 · LXC 101 · pve-3060
+          description: LXC 101 · pve-3060
       - bind9:
           id: svc-bind9
           icon: mdi-server-outline-#83c9c0
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/102
-          description: 192.168.1.206 · LXC 102 · pve-3060
+          description: LXC 102 · pve-3060
       - ct-adguard:
           id: svc-ct-adguard
           icon: mdi-server-outline-#83c9c0
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/104
-          description: 192.168.1.208 · LXC 104 · pve-3060
+          description: LXC 104 · pve-3060
       - ct-vault:
           id: svc-ct-vault
           icon: mdi-server-outline-#83c9c0
           href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/105
-          description: 192.168.1.210 · LXC 105 · pve-3060
+          description: LXC 105 · pve-3060
       - floci:
           id: svc-floci
           icon: mdi-server-outline-#83c9c0
           href: https://pve-7820.home.joecool.work:8006/#v1:0:=lxc/110
-          description: 192.168.1.213 · LXC 110 · pve-7820
+          description: LXC 110 · pve-7820
     - Other virtual machines:
       - gpu-workstation:
           id: svc-gpu-workstation
           icon: mdi-server-outline-#83c9c0
           href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/103
-          description: 192.168.1.207 · VM 103 · pve-7820
+          description: VM 103 · pve-7820
       - harbor:
           id: svc-harbor
           icon: mdi-server-outline-#83c9c0
           href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/107
-          description: 192.168.1.212 · VM 107 · pve-7820
+          description: VM 107 · pve-7820
     - Production applications:
       - argocd-route:
           id: svc-argocd-route
@@ -306,7 +306,7 @@ data:
           id: svc-metallb-config
           icon: argo-cd.png
           href: https://argocd.home.joecool.work/applications/argocd/metallb-config
-          description: Production IP pool · 192.168.1.220–253
+          description: Production load-balancer pool
       - monitoring:
           id: svc-monitoring
           icon: argo-cd.png
@@ -342,7 +342,7 @@ data:
           id: svc-metallb-config-dev
           icon: argo-cd.png
           href: https://argocd.home.joecool.work/applications/argocd/metallb-config-dev
-          description: Dev IP pool · 192.168.1.90–99
+          description: Dev load-balancer pool
       - metallb-dev:
           id: svc-metallb-dev
           icon: argo-cd.png
