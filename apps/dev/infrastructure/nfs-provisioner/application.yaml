@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs-provisioner-dev
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '15'
+spec:
+  project: dev
+  source:
+    repoURL: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    chart: nfs-subdir-external-provisioner
+    targetRevision: 4.0.18
+    helm:
+      valuesObject:
+        nfs:
+          server: 192.168.1.203
+          path: /mnt/nfs-hdd/k8s/dev
+          mountOptions:
+          - nfsvers=4.1
+        storageClass:
+          name: nfs-client
+          provisionerName: home.joecool.work/dev-nfs
+          defaultClass: false
+          allowVolumeExpansion: false
+          archiveOnDelete: true
+          accessModes: ReadWriteMany
+  destination:
+    server: https://192.168.1.80:6443
+    namespace: nfs-provisioner
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
