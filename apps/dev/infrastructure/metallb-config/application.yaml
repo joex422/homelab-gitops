@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  namespace: argocd
+  name: metallb-config-dev
+  annotations:
+    argocd.argoproj.io/sync-wave: '21'
+spec:
+  project: dev
+  destination:
+    server: https://192.168.1.80:6443
+    namespace: metallb-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+  source:
+    repoURL: https://github.com/joex422/homelab-gitops.git
+    targetRevision: dev-metallb
+    path: apps/dev/infrastructure/metallb-config
+    directory:
+      exclude: application.yaml
