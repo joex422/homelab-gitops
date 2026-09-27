@@ -13,7 +13,7 @@ spec:
       labels:
         app: homepage
       annotations:
-        homepage.joecool.work/config-sha256: 68da3c901e077492c569a4b7c5a1dc19709b961d829c3d7716f2db2051d28f4e
+        homepage.joecool.work/config-sha256: 1dddec780b1f869add3d48dc9aa6dacd854efd545f7c9f6accc08576b7ce8d71
     spec:
       containers:
         - name: homepage
