@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: homepage
+      annotations:
+        homepage.joecool.work/config-sha256: 68da3c901e077492c569a4b7c5a1dc19709b961d829c3d7716f2db2051d28f4e
     spec:
       containers:
         - name: homepage

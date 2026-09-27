@@ -5,108 +5,422 @@ metadata:
   namespace: homepage
 data:
   settings.yaml: |
-    title: Homelab
+    title: Joe's Homelab
+    description: Applications, infrastructure and platform services in one place.
     theme: dark
     color: slate
-    background:
-      image: https://livewallpapers4free.com/wp-content/uploads/2024/08/lofi-girl-chilling-night-city-moon-4k-live_thumb1-scaled.jpg
-      saturate: 100
-      brightness: 90
-      opacity: 90
-    cardBlur: sm
     headerStyle: clean
     hideVersion: true
+    hideErrors: false
+    useEqualHeights: true
+    disableCollapse: true
+    statusStyle: dot
+    target: _blank
     layout:
-      Infrastructure:
+      Applications:
+        tab: Overview
+        style: row
+        columns: 4
+      Delivery & access:
+        tab: Overview
+        style: row
+        columns: 4
+      Observability:
+        tab: Overview
         style: row
         columns: 3
-      GitOps & CI/CD:
+      Security & network:
+        tab: Overview
         style: row
         columns: 3
-      Apps:
+      Proxmox hosts:
+        tab: Compute
         style: row
-        columns: 2
+        columns: 3
+      Production nodes:
+        tab: Compute
+        style: row
+        columns: 3
+      Development nodes:
+        tab: Compute
+        style: row
+        columns: 3
+      LXC containers:
+        tab: Compute
+        style: row
+        columns: 3
+      Other virtual machines:
+        tab: Compute
+        style: row
+        columns: 3
+      Production applications:
+        tab: Platform
+        style: row
+        columns: 3
+      Development applications:
+        tab: Platform
+        style: row
+        columns: 3
+      Reference:
+        tab: Overview
+        style: row
+        columns: 3
     quicklaunch:
       searchDescriptions: true
-      hideInternetSearch: false
+      hideInternetSearch: true
       hideVisitURL: false
-
+    disableSearchEngineIndexing: true
   services.yaml: |
-    - Infrastructure:
-        - Vault:
-            icon: vault.png
-            href: https://vault.home.joecool.work
-            description: Secrets management + internal PKI
-            siteMonitor: https://vault.home.joecool.work/v1/sys/health
-        - Harbor:
-            icon: harbor.png
-            href: http://harbor.home.joecool.work
-            description: Container registry
-            siteMonitor: http://harbor.home.joecool.work
-        - AdGuard Home:
-            icon: adguard-home.png
-            href: http://192.168.1.208
-            description: DNS + ad-blocking
-
-    - GitOps & CI/CD:
-        - ArgoCD:
-            icon: argo-cd.png
-            href: https://192.168.1.221
-            description: GitOps continuous delivery
-            siteMonitor: https://192.168.1.221
-        - Headlamp:
-            icon: kubernetes.png
-            href: http://192.168.1.223
-            description: Kubernetes dashboard
-            siteMonitor: http://192.168.1.223
-        - homelab-gitops:
-            icon: github.png
-            href: https://github.com/joex422/homelab-gitops
-            description: GitOps source repo
-
-    - Apps:
-        - Portfolio:
-            icon: react.png
-            href: http://192.168.1.222
-            description: Personal portfolio site
-            siteMonitor: http://192.168.1.222
-        - Cloudflare Tunnel:
-            icon: cloudflare.png
-            href: https://dash.cloudflare.com
-            description: homelab-prod tunnel status
-
+    - Applications:
+      - Portfolio · prod:
+          id: svc-portfolio-prod
+          icon: mdi-web-#83c9c0
+          href: https://portfolio.home.joecool.work
+          description: Your personal portfolio · production
+          siteMonitor: http://web-portfolio.web-portfolio.svc.cluster.local
+      - Portfolio · dev:
+          id: svc-portfolio-dev
+          icon: mdi-code-braces-#83c9c0
+          href: http://192.168.1.90
+          description: Development preview · 192.168.1.90
+          siteMonitor: http://192.168.1.90
+      - NexVault · dev:
+          id: svc-nexvault-dev
+          icon: mdi-folder-lock-outline-#83c9c0
+          href: http://192.168.1.91
+          description: NexVault preview · 192.168.1.91
+          siteMonitor: http://192.168.1.91
+      - Floci:
+          id: svc-floci
+          icon: mdi-cloud-outline-#83c9c0
+          href: http://192.168.1.213:4566
+          description: Local AWS services · LXC 110
+          siteMonitor: http://192.168.1.213:4566
+    - Delivery & access:
+      - Argo CD:
+          id: svc-argo-cd
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work
+          description: GitOps delivery for prod and dev
+          siteMonitor: http://argocd-server.argocd.svc.cluster.local/healthz
+      - Jenkins:
+          id: svc-jenkins
+          icon: jenkins.png
+          href: https://jenkins.home.joecool.work
+          description: Build pipelines and automation
+          siteMonitor: http://jenkins.jenkins.svc.cluster.local:8080/login
+      - Headlamp:
+          id: svc-headlamp
+          icon: kubernetes.png
+          href: https://headlamp.home.joecool.work
+          description: Explore the production cluster
+          siteMonitor: http://headlamp.headlamp.svc.cluster.local
+      - Harbor:
+          id: svc-harbor
+          icon: harbor.png
+          href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/107
+          description: Registry · 192.168.1.212 · web unavailable
+    - Observability:
+      - Grafana:
+          id: svc-grafana
+          icon: grafana.png
+          href: https://grafana.home.joecool.work
+          description: Metrics, dashboards and insights
+          siteMonitor: http://monitoring-grafana.monitoring.svc.cluster.local/api/health
+      - Prometheus:
+          id: svc-prometheus
+          icon: prometheus.png
+          href: https://argocd.home.joecool.work/applications/argocd/monitoring
+          description: Metrics collection · managed in Argo CD
+          siteMonitor: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090/-/ready
+      - Alertmanager:
+          id: svc-alertmanager
+          icon: alertmanager.png
+          href: https://argocd.home.joecool.work/applications/argocd/monitoring
+          description: Alert routing · managed in Argo CD
+          siteMonitor: http://monitoring-kube-prometheus-alertmanager.monitoring.svc.cluster.local:9093/-/ready
+    - Security & network:
+      - Vault:
+          id: svc-vault
+          icon: vault.png
+          href: https://vault.home.joecool.work/ui/
+          description: Secrets and internal PKI · 192.168.1.210
+          siteMonitor: https://vault.home.joecool.work/v1/sys/health
+      - Router:
+          id: svc-router
+          icon: mdi-router-wireless-#83c9c0
+          href: http://192.168.1.254
+          description: LAN gateway · 192.168.1.254
+      - Bind9 DNS:
+          id: svc-bind9-dns
+          icon: mdi-dns-#83c9c0
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/102
+          description: Home DNS · 192.168.1.206 · LXC 102
+      - AdGuard Home:
+          id: svc-adguard-home
+          icon: adguard-home.png
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/104
+          description: DNS filtering · 192.168.1.208 · web unavailable
+      - Step CA:
+          id: svc-step-ca
+          icon: mdi-certificate-outline-#83c9c0
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/101
+          description: Private CA · 192.168.1.205 · web unavailable
+      - OpenVPN:
+          id: svc-openvpn
+          icon: mdi-shield-lock-outline-#83c9c0
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/100
+          description: Remote access · 192.168.1.204 · LXC 100
+    - Proxmox hosts:
+      - pve-3060:
+          id: svc-pve-3060
+          icon: proxmox.png
+          href: https://pve-3060.home.joecool.work:8006
+          description: 192.168.1.26 · dev cluster and infrastructure
+      - pve-7820:
+          id: svc-pve-7820
+          icon: proxmox.png
+          href: https://pve-7820.home.joecool.work:8006
+          description: 192.168.1.203 · prod cluster and NFS
+    - Production nodes:
+      - prod-cp-1:
+          id: svc-prod-cp-1
+          icon: kubernetes.png
+          href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/300
+          description: 192.168.1.70 · VM 300 · pve-7820
+      - prod-worker-1:
+          id: svc-prod-worker-1
+          icon: kubernetes.png
+          href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/301
+          description: 192.168.1.71 · VM 301 · pve-7820
+      - prod-worker-2:
+          id: svc-prod-worker-2
+          icon: kubernetes.png
+          href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/302
+          description: 192.168.1.72 · VM 302 · pve-7820
+    - Development nodes:
+      - k3s-master-01:
+          id: svc-k3s-master-01
+          icon: kubernetes.png
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=qemu/400
+          description: 192.168.1.80 · VM 400 · pve-3060
+      - k3s-worker-01:
+          id: svc-k3s-worker-01
+          icon: kubernetes.png
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=qemu/401
+          description: 192.168.1.81 · VM 401 · pve-3060
+      - k3s-worker-02:
+          id: svc-k3s-worker-02
+          icon: kubernetes.png
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=qemu/402
+          description: 192.168.1.82 · VM 402 · pve-3060
+    - LXC containers:
+      - openvpn:
+          id: svc-openvpn
+          icon: mdi-server-outline-#83c9c0
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/100
+          description: 192.168.1.204 · LXC 100 · pve-3060
+      - step-ca:
+          id: svc-step-ca
+          icon: mdi-server-outline-#83c9c0
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/101
+          description: 192.168.1.205 · LXC 101 · pve-3060
+      - bind9:
+          id: svc-bind9
+          icon: mdi-server-outline-#83c9c0
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/102
+          description: 192.168.1.206 · LXC 102 · pve-3060
+      - ct-adguard:
+          id: svc-ct-adguard
+          icon: mdi-server-outline-#83c9c0
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/104
+          description: 192.168.1.208 · LXC 104 · pve-3060
+      - ct-vault:
+          id: svc-ct-vault
+          icon: mdi-server-outline-#83c9c0
+          href: https://pve-3060.home.joecool.work:8006/#v1:0:=lxc/105
+          description: 192.168.1.210 · LXC 105 · pve-3060
+      - floci:
+          id: svc-floci
+          icon: mdi-server-outline-#83c9c0
+          href: https://pve-7820.home.joecool.work:8006/#v1:0:=lxc/110
+          description: 192.168.1.213 · LXC 110 · pve-7820
+    - Other virtual machines:
+      - gpu-workstation:
+          id: svc-gpu-workstation
+          icon: mdi-server-outline-#83c9c0
+          href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/103
+          description: 192.168.1.207 · VM 103 · pve-7820
+      - harbor:
+          id: svc-harbor
+          icon: mdi-server-outline-#83c9c0
+          href: https://pve-7820.home.joecool.work:8006/#v1:0:=qemu/107
+          description: 192.168.1.212 · VM 107 · pve-7820
+    - Production applications:
+      - argocd-route:
+          id: svc-argocd-route
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/argocd-route
+          description: Argo CD gateway route
+      - cert-manager:
+          id: svc-cert-manager
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/cert-manager
+          description: Certificate automation
+      - cloudflared:
+          id: svc-cloudflared
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/cloudflared
+          description: Cloudflare tunnel
+      - gateway:
+          id: svc-gateway
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/gateway
+          description: Production ingress gateway
+      - gateway-api-crds:
+          id: svc-gateway-api-crds
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/gateway-api-crds
+          description: Gateway API definitions
+      - headlamp:
+          id: svc-headlamp
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/headlamp
+          description: Kubernetes dashboard
+      - homepage:
+          id: svc-homepage
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/homepage
+          description: This dashboard
+      - jenkins:
+          id: svc-jenkins
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/jenkins
+          description: CI build server
+      - metallb:
+          id: svc-metallb
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/metallb
+          description: Production load-balancer controller
+      - metallb-config:
+          id: svc-metallb-config
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/metallb-config
+          description: Production IP pool · 192.168.1.220–253
+      - monitoring:
+          id: svc-monitoring
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/monitoring
+          description: Prometheus, Grafana and Alertmanager
+      - nfs-provisioner:
+          id: svc-nfs-provisioner
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/nfs-provisioner
+          description: Production shared NFS storage
+      - root-prod:
+          id: svc-root-prod
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/root-prod
+          description: GitOps application definitions
+      - vault-issuer:
+          id: svc-vault-issuer
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/vault-issuer
+          description: Vault certificate issuer
+      - web-portfolio:
+          id: svc-web-portfolio
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/web-portfolio
+          description: Production portfolio deployment
+      - web-portfolio-route:
+          id: svc-web-portfolio-route
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/web-portfolio-route
+          description: Portfolio gateway route
+    - Development applications:
+      - metallb-config-dev:
+          id: svc-metallb-config-dev
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/metallb-config-dev
+          description: Dev IP pool · 192.168.1.90–99
+      - metallb-dev:
+          id: svc-metallb-dev
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/metallb-dev
+          description: Dev load-balancer controller
+      - nexvault-dev:
+          id: svc-nexvault-dev
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/nexvault-dev
+          description: NexVault development deployment
+      - nfs-provisioner-dev:
+          id: svc-nfs-provisioner-dev
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/nfs-provisioner-dev
+          description: Dev shared NFS storage
+      - web-portfolio-dev:
+          id: svc-web-portfolio-dev
+          icon: argo-cd.png
+          href: https://argocd.home.joecool.work/applications/argocd/web-portfolio-dev
+          description: Development portfolio deployment
   widgets.yaml: |
+    - greeting:
+        text: Home, under control.
+        text_size: 4xl
     - datetime:
-        text_size: xl
+        text_size: lg
+        locale: en-SG
         format:
-          dateStyle: long
+          dateStyle: medium
           timeStyle: short
-    - resources:
-        cpu: true
-        memory: true
-        label: "homepage pod"
-
   bookmarks.yaml: |
-    - Homelab:
-        - homelab-gitops:
-            - abbr: GH
-              href: https://github.com/joex422/homelab-gitops
-        - Vault UI:
-            - abbr: V
-              href: https://vault.home.joecool.work/ui
-
+    - Reference:
+      - GitOps repository:
+        - abbr: GH
+          href: https://github.com/joex422/homelab-gitops
+      - Cloudflare dashboard:
+        - abbr: CF
+          href: https://dash.cloudflare.com
+      - Homepage documentation:
+        - abbr: HP
+          href: https://gethomepage.dev
   custom.css: |
-    /* Service cards and bookmark rows both ship with a hardcoded
-       dark:bg-white/5 (5% opacity) — barely visible against a vivid
-       background. Overriding via attribute selector since Tailwind
-       escapes ":"/"/" in actual class selectors, but the raw class
-       attribute string still contains them literally, so a substring
-       match works without needing to escape anything. */
-    div[class*="bg-white/5"],
-    a[class*="bg-white/5"] {
-      background-color: rgba(15, 23, 42, 0.75) !important;
-    }
-    div[class*="hover:bg-white/10"]:hover,
-    a[class*="hover:bg-white/10"]:hover {
-      background-color: rgba(15, 23, 42, 0.85) !important;
-    }
+    /* Midnight workspace: stable Homepage selectors, no JavaScript required. */
+    :root { color-scheme: dark; --lab-ink: #ecf4fb; --lab-muted: #99adc1; --lab-accent: #67e8d3; }
+    html, body { background: #080f19 !important; color: var(--lab-ink); font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #background { background: radial-gradient(ellipse at 12% 0%, rgba(22,109,116,.26), transparent 43%), radial-gradient(ellipse at 90% 10%, rgba(44,66,117,.28), transparent 40%), linear-gradient(160deg, #09121e, #080e18 65%) !important; }
+    #background::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(127,177,204,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(127,177,204,.025) 1px, transparent 1px); background-size: 44px 44px; }
+    #page_wrapper { background: radial-gradient(ellipse at 12% 0%, rgba(22,109,116,.20), transparent 48%), radial-gradient(ellipse at 95% 20%, rgba(41,63,102,.24), transparent 42%), #0a111c !important; max-width: 1440px !important; margin: 0 auto; padding: 38px 48px 24px !important; }
+    #inner_wrapper { padding: 0 !important; }
+    #information-widgets { margin: 20px 0 24px !important; padding: 0 8px 26px; border-bottom: 1px solid rgba(148,183,210,.12); align-items: center; }
+    .information-widget-greeting { display: block; flex: 1; min-width: 0; }
+    .information-widget-greeting::before { content: "JOE / HOMELAB"; display: block; color: var(--lab-accent); font-size: 11px; font-weight: 700; letter-spacing: .22em; margin-bottom: 13px; }
+    .information-widget-greeting span { font-size: clamp(26px, 3vw, 40px) !important; font-weight: 650; letter-spacing: -.04em; color: #f1f7fc !important; line-height: 1.2; }
+    .information-widget-greeting::after { content: "2 Proxmox hosts  /  14 guests  /  prod + dev"; display: block; color: var(--lab-muted); font-size: 12px; margin-top: 13px; letter-spacing: .03em; }
+    #information-widgets-right { margin: 0 !important; flex: 0 0 auto; }
+    .information-widget-datetime { color: #b1c3d4; font-size: 13px; font-variant-numeric: tabular-nums; }
+    .services-group { padding: 8px !important; margin-bottom: 15px; }
+    .service-group-name { font-size: 13px !important; font-weight: 600 !important; letter-spacing: .08em; text-transform: uppercase; color: #c7d8e7 !important; margin: 8px 0 2px; }
+    .services-list { gap: 12px !important; margin-top: 13px !important; }
+    .service-card { background: linear-gradient(135deg, rgba(24,40,56,.96), rgba(15,27,40,.95)) !important; border: 1px solid rgba(142,177,204,.14); border-radius: 16px !important; padding: 15px 12px !important; margin: 0 !important; box-shadow: 0 8px 22px rgba(0,0,0,.10) !important; min-height: 95px; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+    .service-card:hover { transform: translateY(-3px); border-color: rgba(103,232,211,.45); background: linear-gradient(135deg, rgba(28,50,65,.98), rgba(18,34,49,.98)) !important; box-shadow: 0 14px 30px rgba(0,0,0,.2) !important; }
+    .service-icon { width: 48px !important; height: 48px; align-self: center; border-radius: 13px; background: rgba(139,174,200,.07); margin-right: 7px; }
+    .service-icon img, .service-icon svg { width: 28px !important; height: 28px !important; object-fit: contain; }
+    .service-name { font-size: 14px !important; font-weight: 600; color: #ecf4fc; line-height: 1.35; padding-right: 10px !important; }
+    .service-description { color: #9eafc1 !important; font-size: 11px !important; font-weight: 400 !important; line-height: 1.65; margin-top: 6px; white-space: normal !important; }
+    .service-tags { top: 9px !important; right: 8px !important; }
+    #svc-argo-cd .service-card { border-color: rgba(103,232,211,.3); background: linear-gradient(135deg, rgba(20,58,63,.96), rgba(15,33,45,.95)) !important; }
+    #svc-nexvault-dev .service-card { border-color: rgba(125,166,255,.3); }
+    button { transition: background .18s ease, color .18s ease; }
+    button[role="tab"] { border-radius: 10px !important; font-size: 13px !important; padding: 10px 22px !important; }
+    button[role="tab"][aria-selected="true"] { background: rgba(103,232,211,.12) !important; color: #8bf4df !important; border-bottom-color: transparent !important; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--lab-accent); outline-offset: 4px; }
+    .bookmark-group { padding: 8px !important; }
+    .bookmark-group a { border-radius: 12px !important; border: 1px solid rgba(142,177,204,.1); background: rgba(17,30,43,.85) !important; }
+    #footer { opacity: .5; font-size: 11px; }
+    @media (max-width: 767px) { #page_wrapper { padding: 24px 14px !important; } #information-widgets { gap: 18px; padding-bottom: 20px; margin-top: 8px !important; } #widgets-wrap { flex-direction: column !important; align-items: flex-start; gap: 18px; } .information-widget-greeting { width: 100%; flex: 0 0 auto; } .information-widget-greeting span { font-size: 30px !important; } .information-widget-greeting::after { font-size: 11px; white-space: nowrap; } #information-widgets-right { width: 100%; } .information-widget-datetime > div { justify-content: flex-start !important; } [role="tablist"] { flex-direction: row !important; } button[role="tab"] { padding: 10px 8px !important; font-size: 12px !important; } .service-card { min-height: 91px; padding: 13px 10px !important; } .services-group { padding: 6px !important; } .services-list { gap: 10px !important; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } .service-card:hover { transform: none; } }
+
+    [role="tablist"] { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 4px; }
+    button[role="tab"] { margin: 0 !important; }
+    .service-icon img[src*="vault.png"] { filter: brightness(0) invert(1); }
